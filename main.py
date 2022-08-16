@@ -2,6 +2,8 @@ import argparse
 import logging
 from datetime import datetime, timezone, timedelta
 
+import holiday
+
 
 def main(date):
     date_str = date.strftime('%Y%m%d')
@@ -18,7 +20,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     week = args.date.weekday()
-    if 0 <= week <= 4:
-        main(args.date)
+    holiday = holiday.holiday_info(args.date)
+
+    if 5 <= week <= 6:
+        logging.warning('weekend')
+    elif args.date in holiday:
+        logging.warning('holiday')
     else:
-        logging.info('weekend')
+        main(args.date)
