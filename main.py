@@ -1,4 +1,5 @@
 import argparse
+import logging
 from datetime import datetime, timezone, timedelta
 
 
@@ -16,4 +17,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    main(args.date)
+    week = args.date.weekday()
+    if 0 <= week <= 4:
+        main(args.date)
+    else:
+        logging.info('weekend')
