@@ -1,6 +1,7 @@
 import datetime
 import logging
 
+from . import calendar
 from . import stock
 
 
@@ -18,10 +19,13 @@ def main(task, date):
     """
     if date is None:
         # today
-        tz = datetime.timezone(datetime.timedelta(hours=9))
-        dt = datetime.datetime.now(tz=tz)
+        dt = calendar.now()
     else:
         dt = datetime.datetime.strptime(date, '%Y%m%d')
+
+    if not calendar.is_trading_day(dt):
+        logging.warning(f'closing day: {dt}')
+        return
 
     date = dt.strftime('%Y%m%d')
     logging.info(date)

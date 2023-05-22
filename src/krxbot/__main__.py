@@ -10,6 +10,8 @@ if __name__ == '__main__':
     parser.add_argument('--date', help='YYYYMMDD')
 
     args = parser.parse_args()
+
+    logging.basicConfig(level=logging.INFO)
     logging.info(args)
 
     main(args.task, args.date)
